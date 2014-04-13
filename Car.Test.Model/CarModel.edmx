@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CarModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="CarModelStoreContainer">
+    <EntitySet Name="Car" EntityType="CarModel.Store.Car" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CarCategory" EntityType="CarModel.Store.CarCategory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CarSell" EntityType="CarModel.Store.CarSell" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CarCategoryCar" Association="CarModel.Store.CarCategoryCar">
+      <End Role="CarCategory" EntitySet="CarCategory" />
+      <End Role="Car" EntitySet="Car" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Car">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="Status" Type="smallint" Nullable="false" />
+    <Property Name="DelFlag" Type="smallint" Nullable="false" />
+    <Property Name="CarCategoryID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarCategory">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="PreLetter" Type="nvarchar" Nullable="false" MaxLength="8" />
+    <Property Name="ParentID" Type="int" Nullable="false" />
+    <Property Name="SubTime" Type="datetime" Nullable="false" />
+    <Property Name="Level" Type="int" Nullable="false" />
+    <Property Name="IsLeaf" Type="bit" Nullable="false" />
+    <Property Name="Status" Type="smallint" Nullable="false" />
+    <Property Name="DelFlag" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CarSell">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CarCategoryIds" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="CarCategoryCar">
+    <End Role="CarCategory" Type="CarModel.Store.CarCategory" Multiplicity="1" />
+    <End Role="Car" Type="CarModel.Store.Car" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CarCategory">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Car">
+        <PropertyRef Name="CarCategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CarModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CarModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Car" EntityType="CarModel.Car" />
+          <EntitySet Name="CarCategory" EntityType="CarModel.CarCategory" />
+          <EntitySet Name="CarSell" EntityType="CarModel.CarSell" />
+          <AssociationSet Name="CarCategoryCar" Association="CarModel.CarCategoryCar">
+            <End Role="CarCategory" EntitySet="CarCategory" />
+            <End Role="Car" EntitySet="Car" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Car">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="32" />
+          <Property Type="Int16" Name="Status" Nullable="false" />
+          <Property Type="Int16" Name="DelFlag" Nullable="false" />
+          <NavigationProperty Name="CarCategory" Relationship="CarModel.CarCategoryCar" FromRole="Car" ToRole="CarCategory" />
+          <Property Type="Int32" Name="CarCategoryID" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarCategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="32" />
+          <Property Type="String" Name="PreLetter" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="ParentID" Nullable="false" />
+          <Property Type="DateTime" Name="SubTime" Nullable="false" />
+          <Property Type="Int32" Name="Level" Nullable="false" />
+          <Property Type="Boolean" Name="IsLeaf" Nullable="false" />
+          <Property Type="Int16" Name="Status" Nullable="false" />
+          <Property Type="Int16" Name="DelFlag" Nullable="false" />
+          <NavigationProperty Name="Car" Relationship="CarModel.CarCategoryCar" FromRole="CarCategory" ToRole="Car" />
+        </EntityType>
+        <EntityType Name="CarSell">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CarCategoryIds" Nullable="false" MaxLength="Max" />
+        </EntityType>
+        <Association Name="CarCategoryCar">
+          <End Type="CarModel.CarCategory" Role="CarCategory" Multiplicity="1" />
+          <End Type="CarModel.Car" Role="Car" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarCategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Car">
+              <PropertyRef Name="CarCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CarModelStoreContainer" CdmEntityContainer="CarModelContainer">
+    <EntitySetMapping Name="Car">
+      <EntityTypeMapping TypeName="IsTypeOf(CarModel.Car)">
+        <MappingFragment StoreEntitySet="Car">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+          <ScalarProperty Name="CarCategoryID" ColumnName="CarCategoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarCategory">
+      <EntityTypeMapping TypeName="IsTypeOf(CarModel.CarCategory)">
+        <MappingFragment StoreEntitySet="CarCategory">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PreLetter" ColumnName="PreLetter" />
+          <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+          <ScalarProperty Name="SubTime" ColumnName="SubTime" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="IsLeaf" ColumnName="IsLeaf" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="DelFlag" ColumnName="DelFlag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CarSell">
+      <EntityTypeMapping TypeName="IsTypeOf(CarModel.CarSell)">
+        <MappingFragment StoreEntitySet="CarSell">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CarCategoryIds" ColumnName="CarCategoryIds" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
