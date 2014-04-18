@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "DisableChk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<div>
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+
+<div>
+    <p>禁用时：
+        <input type="checkbox" id="py" class="checkbox first"/><span>关联父</span>
+        <input type="checkbox" id="sy" class="checkbox first" checked /><span>关联子</span>
+    </p>
+    <p>
+        取消禁用时：
+        <input type="checkbox" id="pn" class="checkbox first" checked /><span>关联父</span>
+        <input type="checkbox" id="sn" class="checkbox first" checked /><span>关联子</span>
+    </p>
+    <p><a id="disabledTrue" href="#" title="set checkbox to be disabled." onclick="return false;">禁用</a></p>
+    <p><a id="disabledFalse" href="#" title="set checkbox to be abled." onclick="return false;">取消禁用</a></p>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script src="~/Scripts/zTree_v3/jquery.ztree.excheck-3.5.js"></script>
+    <script type="text/javascript">
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        var zNodes = [
+			{ id: 1, pId: 0, name: "随意勾选 1", open: true },
+			{ id: 11, pId: 1, name: "随意勾选 1-1", open: true },
+			{ id: 111, pId: 11, name: "disabled 1-1-1", chkDisabled: true },
+			{ id: 112, pId: 11, name: "随意勾选 1-1-2" },
+			{ id: 12, pId: 1, name: "disabled 1-2", chkDisabled: true, checked: true, open: true },
+			{ id: 121, pId: 12, name: "disabled 1-2-1", checked: true },
+			{ id: 122, pId: 12, name: "disabled 1-2-2" },
+			{ id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true },
+			{ id: 21, pId: 2, name: "随意勾选 2-1" },
+			{ id: 22, pId: 2, name: "随意勾选 2-2", open: true },
+			{ id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true },
+			{ id: 222, pId: 22, name: "随意勾选 2-2-2" },
+			{ id: 23, pId: 2, name: "随意勾选 2-3" }
+        ];
+
+        function disabledNode(e) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			disabled = e.data.disabled,//获取{ disabled: true }中的数据
+			nodes = zTree.getSelectedNodes(),//获取选中行
+			inheritParent = false, inheritChildren = false;
+            if (nodes.length == 0) { //如果没有选中节点
+                alert("请先选择一个节点");
+            }
+            if (disabled) { 
+                inheritParent = $("#py").attr("checked");
+                inheritChildren = $("#sy").attr("checked");
+            } else {
+                inheritParent = $("#pn").attr("checked");
+                inheritChildren = $("#sn").attr("checked");
+            }
+
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                zTree.setChkDisabled(nodes[i], disabled, inheritParent, inheritChildren);
+            }
+        }
+
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            $("#disabledTrue").bind("click", { disabled: true }, disabledNode);
+            $("#disabledFalse").bind("click", { disabled: false }, disabledNode);
+
+        });
+    </script>
+}
+

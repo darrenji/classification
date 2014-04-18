@@ -1,0 +1,355 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles
+{
+    <link href="~/Content/themes/gray/easyui.css" rel="stylesheet" />
+     <link href="~/Content/themes/icon.css" rel="stylesheet" />
+   @* <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />*@
+    <link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />
+     <link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <style type="text/css">
+        table {
+            font-size:12px;
+            width: 700px; 
+            border-collapse: collapse;
+        }
+
+        #tt {
+            width: 700px;
+        }
+
+        .ui-datepicker select.ui-datepicker-month, 
+        .ui-datepicker select.ui-datepicker-year { width: 40%;}
+    </style>
+   
+}
+
+<div class="wrapper">
+    <!--查询开始-->
+    <div id="query" class="query" >
+        <span>类名:</span> 
+        <input id="txtName" style="line-height:22px;border:1px solid #ccc" maxlength="10"> 
+        <span>提交时间从:</span> 
+        <input type="text" name="startSubTime" id="startSubTime" style="line-height:22px;border:1px solid #ccc" />
+        <span>至:</span> 
+        <input type="text" name="endSubTime" id="endSubTime" style="line-height:22px;border:1px solid #ccc" />
+        <a href="#" class="easyui-linkbutton" plain="false" id="btnSearch">搜索</a> 
+    </div>    
+    <!--查询结束-->
+
+    <!--表格开始-->
+    <div class="ctable" id="ctable">
+        <table id="tt"></table>
+    </div>
+    <!--表格结束-->  
+    
+    <!--添加开始-->
+    <div class="addContent" id="addContent">
+        <iframe id="frameAdd" src="" scrolling="no" frameborder="0" height="100%" width="100%" onload="this.height=this.contentWindow.document.documentElement.scrollHeight">                
+        </iframe>
+    </div>
+    <!--添加结束-->
+    
+    <!--编辑开始-->
+    <div class="editContent" id="editContent">
+        <iframe id="frameEdit" src="" scrolling="no" frameborder="0" height="100%" width="100%" onload="this.height=this.contentWindow.document.documentElement.scrollHeight">                
+        </iframe>
+    </div>
+    <!--编辑结束-->      
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery.ui.core.min.js"></script>
+    <script src="~/Scripts/jquery.ui.datepicker.min.js"></script>
+    <script src="~/Scripts/jquery.ui.datepicker-zh-CN.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+   <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script src="~/Scripts/zTree_v3/jquery.ztree.excheck-3.5.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            //限制类名的长度
+            limitInputLength($('#txtActionName'));
+
+            //限制时间搜索为只读
+            $('#startSubTime').attr('readonly', true);
+            $('#endSubTime').attr('readonly', true);
+
+            //起始和结束日期
+            fromDateToDate();
+
+            //隐藏元素隐藏
+            initialHide();
+
+            //显示列表
+            initData();
+
+            //搜索
+            $('.query').on("click", "#btnSearch", function () {
+                initData(initQuery());
+            });
+        });
+
+        //限制文本框长度
+        function limitInputLength(_input) {
+            var _max = _input.attr('maxlength');
+            _input.bind('keyup change', function () {
+                if ($(this).val().length > _max) {
+                    ($(this).val($(this).val().substring(0, _max)));
+                }
+            });
+        }
+
+        //起始和结束日期
+        function fromDateToDate() {
+            $('#startSubTime').datepicker({
+                dateFormat: "yy-mm-dd",
+                changeMonth: true,
+                changeYear: true,
+                numberOfMonths: 2,
+                onClose: function (selectedDate) {
+                    $("#endSubTime").datepicker("option", "minDate", selectedDate);
+                }
+            });
+
+            $('#endSubTime').datepicker({
+                dateFormat: "yy-mm-dd",
+                changeMonth: true,
+                changeYear: true,
+                numberOfMonths: 2,
+                onClose: function (selectedDate) {
+                    $("#startSubTime").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+        }
+
+        //隐藏元素隐藏
+        function initialHide() {
+            $('.addContent').css("display", "none");
+            $('.editContent').css("display", "none");
+        }
+
+        //获取查询表单的值组成json
+        function initQuery() {
+            var queryParams = {
+                txtName: $('#txtName').val(),
+                startSubTime: $('#startSubTime').val()
+            };
+            return queryParams;
+        }
+
+        //显示分类
+        function initData(params) {
+            $('#tt').datagrid({
+                url: '@Url.Action("GetCarCategoryJson","Home")',
+                title: '分类列表',
+                //width: 800,
+                height: 390,
+                fitColumns: true,
+                nowrap: true,
+                showFooter: true,
+                idField: 'ID',
+                loadMsg: '正在加载信息...',
+                pagination: true,
+                singleSelect: false,
+                queryParams: params,
+                pageSize: 10,
+                pageNumber: 1,
+                pageList: [10, 20, 30],
+                //toolbar: '#query',
+                columns: [
+                    [
+                        { field: 'ck', checkbox: true, align: 'center', width: 30 },
+                        { field: 'ID', title: '编号' },
+                        { field: 'Name', title: '类名' },
+                        { field: 'PreLetter', title: '前缀字母' },
+                        { field: 'ParentID', title: '父级ID' },
+                        { field: 'Level', title: '层级' },
+                        { field: 'IsLeaf', title: '是否叶节点' },
+                        {
+                            field: 'DelFlag',
+                            title: '删除状态',
+                            formatter: function (value, row, index) {
+                                if (value == "0") {
+                                    return '使用中';
+                                } else if (value == "1") {
+                                    return '逻辑删除';
+                                } else {
+                                    return '物理删除';
+                                }
+                            }
+                        },
+                        {
+                            field: 'SubTime',
+                            title: '修改时间',
+                            formatter: function (value, row, index) {
+                                return eval("new " + value.substr(1, value.length - 2)).toLocaleDateString();
+                            }
+                        }
+                    ]
+                ],
+                toolbar: [
+                    {
+                        id: 'btnAdd',
+                        text: '添加',
+                        iconCls: 'icon-add',
+                        handler: function () {
+                            showAdd();
+                        }
+                    }, '-', {
+                        id: 'btnUpdate',
+                        text: '修改',
+                        iconCls: 'icon-edit',
+                        handler: function () {
+                            var rows = $('#tt').datagrid("getSelections");
+                            if (rows.length != 1) {
+                                $.messager.alert("提示", "只能选择一个分类进行编辑");
+                                return;
+                            }
+                            //修改方法
+                            showEdit(rows[0].ID);
+                        }
+                    }, '-', {
+                        id: 'btnDelete',
+                        text: '删除',
+                        iconCls: 'icon-remove',
+                        handler: function () {
+                            var rows = $('#tt').datagrid("getSelections");
+                            if (rows.length < 1) {
+                                $.messager.alert("提示", "请选择要删除的分类");
+                                return;
+                            }
+                            $.messager.confirm("提示信息", "确定要删除吗？", function (r) {
+                                if (r) {
+                                    var strIds = "";
+                                    for (var i = 0; i < rows.length; i++) {
+                                        strIds += rows[i].ID + '_'; //1_2_3
+                                    }
+                                    $.post("@Url.Action("DeleteCarCategories", "Home")", { ids: strIds }, function (data) {
+                                        if (data.msg == "no") {
+                                            $.messager.alert("提示", "删除失败！");
+                                            $('#tt').datagrid("clearSelections");
+                                            return;
+                                        } else if (data.msg) {
+                                            $.messager.alert("提示", "删除成功");
+                                            initData(initQuery());
+                                            $('#tt').datagrid("clearSelections");
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                ],
+                OnBeforeLoad: function (param) {
+                    return true;
+                }
+            });
+        }
+
+        //添加对话框
+        function showAdd() {
+            var url = "/Home/AddCarCategory";
+            $.ajax({
+                cache: false,
+                url: url,
+                contentType: 'application/html;charset=utf-8',
+                type: "GET",
+                success: function (result) {
+                    if (result)  {
+                        $("#frameAdd").attr("src", url);
+                        $("#addContent").css("display", "block");
+                        $('#addContent').dialog({
+                            toolbar: [],
+                            maximizable: false,
+                            draggable: true,
+                            resizable: false,
+                            closable: false,
+                            modal: true,
+                            cache: false,
+                            //height: '100%',
+                            width: 560,
+                            height: 480,
+                            top:50,
+                            title: "添加类别",
+                            onOpen: function () {
+
+                            },
+                            buttons: []
+                        });
+                    }
+                },
+                error: function (xhr, status) {
+                    alert("加载内容失败" + status);
+                }
+            });
+        }
+
+        //修改对话框
+        function showEdit(carCatId) {
+            var url = "/Home/EditCarCategory?id=" + carCatId;
+            $.ajax({
+                cache: false,
+                url: url,
+                contentType: 'application/html;charset=utf-8',
+                type: "GET",
+                success: function (result) {
+                    if (result) {
+                        $("#frameEdit").attr("src", url);
+                        $("#editContent").css("display", "block");
+                        $('#editContent').dialog({
+                            toolbar: [],
+                            maximizable: false,
+                            draggable: true,
+                            resizable: false,
+                            closable: false,
+                            modal: true,
+                            cache: false,
+                            //height: '100%',
+                            width: 560,
+                            title: "修改类别",
+                            onOpen: function () {
+
+                            },
+                            buttons: []
+                        });
+                    }
+                },
+                error: function (xhr, status) {
+                    alert("加载内容失败" + status);
+                }
+            });
+        }
+
+        //添加成功后
+        function refreshAfterAdd() {
+            //emptySearch();
+            initData();
+            $('#tt').datagrid("clearSelections");
+            $('.addContent').dialog("close");
+        }
+
+        //取消添加
+        function  cancelAdd() {
+            $('.addContent').dialog("close");
+        }
+
+        //修改成功后
+        function refreshAfterEdit() {
+            initData();
+            $('#tt').datagrid("clearSelections");
+            $('.editContent').dialog("close");
+        }
+
+        //取消修改
+        function candelEdit() {
+            $('#tt').datagrid("clearSelections");
+            $('.editContent').dialog("close");
+        }
+    </script>
+}

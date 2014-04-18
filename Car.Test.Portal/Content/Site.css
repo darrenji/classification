@@ -59,3 +59,59 @@ textarea {
 .validation-summary-valid {
     display: none;
 }
+
+/* 自添加
+-----------------------------------------------------------*/
+
+.wrapper {
+    width:700px;
+    border:solid 0px green;
+    word-wrap: break-word; 
+    word-break: break-all;
+    min-height:480px;
+    font-size:12px;
+}
+
+.query {
+    width:100%;
+    border: solid 0px red;
+    margin-top:20px;
+}
+
+
+table {
+    font-size:12px;
+    width: 700px; 
+    border-collapse: collapse;
+}
+
+
+td,th {
+    white-space: nowrap; 
+    border: 0px solid #666; 
+    padding: 3px 4px;
+}
+
+th {
+    background-color:	#64C1DE;
+}
+
+
+.tleft {
+    text-align:right;
+}
+
+
+.ctable {
+    margin-top:10px;
+}
+
+.ctable table {
+    width:auto;
+}
+
+.ctable td, th {
+    white-space: nowrap; 
+    border: 0px solid #666; 
+    padding: 3px 4px;
+}

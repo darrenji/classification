@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+<ul id="treeDemo" class="ztree"></ul>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript">
+        var setting = {};
+        var zNodes = [
+        {
+            name: "父节点1",
+            open: true,
+            children: [
+                {
+                    name: "父节点101", children: [
+                        { name: "叶节点10101" },
+                        { name: "叶节点10102" },
+                        { name: "叶节点10103" }
+                    ]
+                },
+                {
+                    name: "父节点102", children: [
+                        { name: "叶节点10201" },
+                        { name: "叶节点10202" }
+                    ]
+                }
+            ]
+        }, {
+            name: "父节点2",
+            children: [
+                {
+                    name: "父节点201", open: true, children: [
+                        { name: "叶节点20101" },
+                        { name: "叶节点20102" }
+                    ]
+                },
+                {
+                    name: "父节点202", children: [
+                        { name: "叶节点20201" },
+                        { name: "叶节点20202" }
+                    ]
+                },
+                {
+                    name: "父节点203", children: [
+                        { name: "叶节点20301" },
+                        { name: "叶节点20302" }
+                    ]
+                }
+            ]
+        }];
+
+        $(function() {
+            $.fn.zTree.init($('#treeDemo'), setting, zNodes);
+        });
+    </script>
+}

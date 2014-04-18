@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "ZTreeFunc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+<div>
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+<div>
+    <p><a id="refreshNode" href="#" onclick="return false;">重新加载</a></p>
+    <p><a id="addNode" href="#" onclick="return false;">追加</a></p>
+    <p><a id="refreshNodeSilent" href="#" onclick="return false;">悄悄地 重新加载</a></p>
+    <p><a id="addNodeSilent" href="#" onclick="return false;">悄悄地 追加</a></p>
+</div>
+<div>
+    <p>异步日志</p>
+    <ul id="log" class="log"></ul>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript">
+        var setting = {
+            view: {
+                selectedMulti: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            async: {
+                enable: true,
+                url: '@Url.Action("GetAsync","ZTree")',
+                autoParam: ["id", "name=n", "level=lv"],
+                otherParam: { "otherParam": "zTreeAsyncTest" },
+                dataFilter: filter
+            },
+            callback: {
+                beforeClick: beforeClick,
+                beforeAsync: beforeAsync,
+                onAsyncError: onAsyncError,
+                onAsyncSuccess: onAsyncSuccess
+            }
+        };
+
+        //过滤节点内容
+        function filter(treeId, parentNode, childNodes) {
+            if (!childNodes) return null;
+            for (var i = 0, l = childNodes.length; i < l; i++) {
+                childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+            }
+            return childNodes;
+        }
+
+        //点击之前的回调，只能针对父节点重新加载或追加节点
+        function beforeClick(treeId, treeNode) {
+            if (!treeNode.isParent) { //判断是否是父节点
+                alert("请选择父节点");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        //异步之前的回调
+        var log, className = "dark";
+        function beforeAsync(treeId, treeNode) {
+            className = (className === "dark" ? "" : "dark");
+            showLog("[ " + getTime() + " beforeAsync ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root"));
+            return true;
+        }
+
+        //异步错误的回调
+        function onAsyncError(event, treeId, treeNode, XMLHttpRequest, textStatus, errorThrown) {
+            showLog("[ " + getTime() + " onAsyncError ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root"));
+        }
+
+        //异步成功的回调
+        function onAsyncSuccess(event, treeId, treeNode, msg) {
+            showLog("[ " + getTime() + " onAsyncSuccess ]&nbsp;&nbsp;&nbsp;&nbsp;" + ((!!treeNode && !!treeNode.name) ? treeNode.name : "root"));
+        }
+
+        //从当前日期获取时间
+        function getTime() {
+            var now = new Date(),
+			h = now.getHours(),
+			m = now.getMinutes(),
+			s = now.getSeconds(),
+			ms = now.getMilliseconds();
+            return (h + ":" + m + ":" + s + " " + ms);
+        }
+
+        //显示日志
+        function showLog(str) {
+            if (!log) log = $("#log");
+            log.append("<li class='" + className + "'>" + str + "</li>");
+            if (log.children("li").length > 8) {
+                log.get(0).removeChild(log.children("li")[0]);
+            }
+        }
+
+        //针对父节点刷新
+        function refreshNode(e) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+
+            //根据 { type: "add", silent: true }
+			type = e.data.type,
+			silent = e.data.silent,
+
+            //获取选中父节点，点击之前已经用回调函数保证了只能选择父节点
+			nodes = zTree.getSelectedNodes();
+            if (nodes.length == 0) {
+                alert("请先选择一个父节点");
+            }
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                zTree.reAsyncChildNodes(nodes[i], type, silent);
+                if (!silent) zTree.selectNode(nodes[i]);
+            }
+        }
+
+        $(function() {
+            $.fn.zTree.init($("#treeDemo"), setting);
+            $("#refreshNode").on("click", { type: "refresh", silent: false }, refreshNode);
+            $("#refreshNodeSilent").on("click", { type: "refresh", silent: true }, refreshNode);
+            $("#addNode").on("click", { type: "add", silent: false }, refreshNode);
+            $("#addNodeSilent").on("click", { type: "add", silent: true }, refreshNode);
+        });
+    </script>
+}

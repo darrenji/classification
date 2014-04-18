@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Asyn";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+<ul id="treeDemo" class="ztree"></ul>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript">
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            async: {
+                enable: true,
+                url: '@Url.Action("GetAsync","ZTree")',
+                autoParam: ["id", "name=n", "level=lv"],
+                otherParam: { "otherParam": "zTreeAsyncTest" },
+                dataFilter: filter
+            }
+        };
+
+        function filter(treeId, parentNode, childNodes) {
+            if (!childNodes) return null;
+            for (var i = 0, l = childNodes.length; i < l; i++) {
+                childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+            }
+            return childNodes;
+        }
+
+        $(function() {
+            $.fn.zTree.init($('#treeDemo'), setting);
+        });
+    </script>
+}

@@ -12,7 +12,12 @@ namespace Car.Test.Portal
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                //"~/Scripts/jquery-ui-{version}.js",
+                        "~/Scripts/jquery.ui.core.min.js",
+                        "~/Scripts/jquery.ui.widget.min.js",
+                        "~/Scripts/jquery.ui.datepicker.min.js",
+                        "~/Scripts/jquery.ui.datepicker-zh-CN.js"
+                        ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",

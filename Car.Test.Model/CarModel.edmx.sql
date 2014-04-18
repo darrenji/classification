@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, and Azure
 -- --------------------------------------------------
--- Date Created: 04/11/2014 17:15:20
+-- Date Created: 04/16/2014 11:49:37
 -- Generated from EDMX file: F:\学习\练习\Car.Test\Car.Test.Model\CarModel.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,23 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_CarCategoryCar]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Car] DROP CONSTRAINT [FK_CarCategoryCar];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Car]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Car];
+GO
+IF OBJECT_ID(N'[dbo].[CarCategory]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CarCategory];
+GO
+IF OBJECT_ID(N'[dbo].[CarSell]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CarSell];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables

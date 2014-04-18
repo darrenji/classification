@@ -1,0 +1,160 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script src="~/Scripts/zTree_v3/jquery.ztree.excheck-3.5.js"></script>
+    <script type="text/javascript">
+        //var setting = {
+        //    check: {
+        //        enable: true,
+        //        chkStyle: "radio",
+        //        radioType: "all"
+        //    },
+        //    view: {
+        //        dblClickExpand: false
+        //    },
+        //    data: {
+        //        simpleData: {
+        //            enable: true
+        //        }
+        //    },
+        //    //callback: {
+        //    //    onClick: onClick,
+        //    //    onCheck: onCheck
+        //    //}
+        //};
+
+        var setting = {
+            //showLine: true, //是否显示节点间的连线  
+            //checkable: true,
+            //checkStyle: "radio",
+            //checkRadioType: "all",
+            //async : true, //需要采用异步方式获取子节点数据,默认false  
+            //asyncUrl : url, //当 async = true 时，设置异步获取节点的 URL 地址 ,允许接收 function 的引用  
+            //asyncParam : ["CategoryId"], //提交的与节点数据相关的必需参数  
+            //isSimpleData: true, //数据是否采用简单 Array 格式，默认false  
+            //treeNodeKey: "ID", //在isSimpleData格式下，当前节点id属性  
+            //treeNodeParentKey: "ParentID", //在isSimpleData格式下，当前节点的父节点id属性  
+            //nameCol: "Name",            //在isSimpleData格式下，当前节点名称  
+            //expandSpeed: "fast",//(三种默认定义："slow", "normal", "fast")或 表示动画时长的毫秒数值(如：1000)          
+            //checkType: { "Y": "ps", "N": "ps" },
+
+            check: {
+                enable: true,
+                chkStyle: "radio",
+                radioType: "all"
+                //chkboxType: { "Y": "ps", "N": "ps" }
+            },
+            view: {
+                dblClickExpand: false,
+                showLine: true,
+                expandSpeed: "fast",
+                showIcon: true
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "ID",
+                    pIdKey: "ParentID",
+                    rootPid: 0
+                },
+                key: {
+                    name: "Name",
+                    //pId: "ParentID",
+                    //id: "ID"
+                }
+            },
+@*            async: {
+                enable: true,
+                url: '@Url.Action("LoadAllCategories","Home")',
+                autoParam: ["ID", "Name", "ParentID"],
+                //autoParam: ["id", "name", "pId"],
+                //otherParam: { "otherParam": "zTreeAsyncTest" }
+                //dataFilter: filter
+            },*@
+                    //callback: { //回调函数                              
+                    //    //dblclick: zTreeOnDblclick
+                    //    onClick: onClick,
+                    //    onCheck: onCheck
+                    //}
+                };
+
+        var zNodes = [
+            { ID: 1, ParentID: 0, Name: "北京" },
+            { ID: 2, ParentID: 0, Name: "天津" },
+            { ID: 3, ParentID: 0, Name: "上海" },
+            { ID: 6, ParentID: 0, Name: "重庆" },
+            { ID: 4, ParentID: 0, Name: "河北省", open: true, nocheck: true },
+            { ID: 41, ParentID: 4, Name: "石家庄" },
+            { ID: 42, ParentID: 4, Name: "保定" },
+            { ID: 43, ParentID: 4, Name: "邯郸" },
+            { ID: 44, ParentID: 4, Name: "承德" },
+            { ID: 5, ParentID: 0, Name: "广东省", open: true, nocheck: true },
+            { ID: 51, ParentID: 5, Name: "广州" },
+            { ID: 52, ParentID: 5, Name: "深圳" },
+            { ID: 53, ParentID: 5, Name: "东莞" },
+            { ID: 54, ParentID: 5, Name: "佛山" },
+            { ID: 6, ParentID: 0, Name: "福建省", open: true, nocheck: true },
+            { ID: 61, ParentID: 6, Name: "福州" },
+            { ID: 62, ParentID: 6, Name: "厦门" },
+            { ID: 63, ParentID: 6, Name: "泉州" },
+            { ID: 64, ParentID: 6, Name: "三明" }
+        ];
+
+        //var zNodes = [
+		//	{ id: 1, pId: 0, name: "北京" },
+		//	{ id: 2, pId: 0, name: "天津" },
+		//	{ id: 3, pId: 0, name: "上海" },
+		//	{ id: 6, pId: 0, name: "重庆" },
+		//	{ id: 4, pId: 0, name: "河北省", open: true, nocheck: true },
+		//	{ id: 41, pId: 4, name: "石家庄" },
+		//	{ id: 42, pId: 4, name: "保定" },
+		//	{ id: 43, pId: 4, name: "邯郸" },
+		//	{ id: 44, pId: 4, name: "承德" },
+		//	{ id: 5, pId: 0, name: "广东省", open: true, nocheck: true },
+		//	{ id: 51, pId: 5, name: "广州" },
+		//	{ id: 52, pId: 5, name: "深圳" },
+		//	{ id: 53, pId: 5, name: "东莞" },
+		//	{ id: 54, pId: 5, name: "佛山" },
+		//	{ id: 6, pId: 0, name: "福建省", open: true, nocheck: true },
+		//	{ id: 61, pId: 6, name: "福州" },
+		//	{ id: 62, pId: 6, name: "厦门" },
+		//	{ id: 63, pId: 6, name: "泉州" },
+		//	{ id: 64, pId: 6, name: "三明" }
+        //];
+
+        $(function () {
+            
+            @*            $.ajax({
+                cache: false,
+                url: '@Url.Action("LoadAllCategories", "Home")',
+                type: "GET",
+                dataType: "text",
+                success: function (result) {
+                    //$.fn.zTree.init($("#tree"), setting, eval('(' + result + ')'));
+                    $.fn.zTree.init($("#tree"), setting,zNodes);
+                },
+                error: function (xhr, status) {
+                    alert("加载类别失败" + status);
+                }
+            });*@
+
+            $.fn.zTree.init($("#tree"), setting, zNodes);
+        });
+    </script>
+</head>
+<body>
+    <div>
+         <ul id="tree" class="ztree" style="margin-top:0; width:180px; height: 250px; overflow:auto;"></ul>
+    </div>
+</body>
+</html>

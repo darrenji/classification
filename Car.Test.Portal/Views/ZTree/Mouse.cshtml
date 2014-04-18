@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Mouse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+<div>
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+<div>
+    <p>mousedown event log:</p>
+    <ul id="log_down" class="log small"></ul>
+    <p>mouseup event log:</p>
+    <ul id="log_up" class="log small"></ul>
+    <p>rightClick event log:</p>
+    <ul id="log_right" class="log small"></ul>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript">
+        var setting = {
+            data: {
+                key: {
+                    title: "t"
+                },
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                beforeMouseDown: beforeMouseDown,
+                beforeMouseUp: beforeMouseUp,
+                beforeRightClick: beforeRightClick,
+                onMouseDown: onMouseDown,
+                onMouseUp: onMouseUp,
+                onRightClick: onRightClick
+            }
+        };
+
+        var zNodes = [
+			{ id: 1, pId: 0, name: "不能 右键 0", t: "试试右键，没有 onRightClick 吧？", open: true, right: false },
+			{ id: 11, pId: 1, name: "不能 右键 1", t: "试试右键，没有 onRightClick 吧？", right: false },
+			{ id: 12, pId: 1, name: "不能 右键 2", t: "试试右键，没有 onRightClick 吧？", right: false },
+			{ id: 13, pId: 1, name: "不能 右键 3", t: "试试右键，没有 onRightClick 吧？", right: false },
+			{ id: 2, pId: 0, name: "不能 Down 0", t: "试试 MouseDown ，没有 onMouseDown 吧？", open: true, down: false },
+			{ id: 21, pId: 2, name: "不能 Down 1", t: "试试 MouseDown ，没有 onMouseDown 吧？", down: false },
+			{ id: 22, pId: 2, name: "不能 Down 2", t: "试试 MouseDown ，没有 onMouseDown 吧？", down: false },
+			{ id: 23, pId: 2, name: "不能 Down 3", t: "试试 MouseDown ，没有 onMouseDown 吧？", down: false },
+			{ id: 3, pId: 0, name: "不能 Up 0", t: "试试 MouseUp ，没有 onMouseUp 吧？", open: true, up: false },
+			{ id: 31, pId: 3, name: "不能 Up 1", t: "试试 MouseUp ，没有 onMouseUp 吧？", up: false },
+			{ id: 32, pId: 3, name: "不能 Up 2", t: "试试 MouseUp ，没有 onMouseUp 吧？", up: false },
+			{ id: 33, pId: 3, name: "不能 Up 3", t: "试试 MouseUp ，没有 onMouseUp 吧？", up: false }
+        ];
+
+        var log, className = { down: "dark", up: "dark", right: "dark" };
+        function beforeMouseDown(treeId, treeNode) {
+            className.down = (className.down === "dark" ? "" : "dark");
+            showLog("[ " + getTime() + " beforeMouseDown ]&nbsp;&nbsp;" + (treeNode ? treeNode.name : "root"), "down");
+            return (!treeNode || treeNode.down != false);
+        }
+        function onMouseDown(event, treeId, treeNode) {
+            showLog("[ " + getTime() + " onMouseDown ]&nbsp;&nbsp;" + (treeNode ? treeNode.name : "root"), "down");
+        }
+        function beforeMouseUp(treeId, treeNode) {
+            className.up = (className.up === "dark" ? "" : "dark");
+            showLog("[ " + getTime() + " beforeMouseUp ]&nbsp;&nbsp;" + (treeNode ? treeNode.name : "root"), "up");
+            return (!treeNode || treeNode.up != false);
+        }
+        function onMouseUp(event, treeId, treeNode) {
+            showLog("[ " + getTime() + " onMouseUp ]&nbsp;&nbsp;" + (treeNode ? treeNode.name : "root"), "up");
+        }
+        function beforeRightClick(treeId, treeNode) {
+            className.right = (className.right === "dark" ? "" : "dark");
+            showLog("[ " + getTime() + " beforeRightClick ]&nbsp;&nbsp;" + (treeNode ? treeNode.name : "root"), "right");
+            return (!treeNode || treeNode.right != false);
+        }
+        function onRightClick(event, treeId, treeNode) {
+            showLog("[ " + getTime() + " onRightClick ]&nbsp;&nbsp;" + (treeNode ? treeNode.name : "root"), "right");
+        }
+        function showLog(str, logType) {
+            log = $("#log" + "_" + logType);
+            log.append("<li class='" + className[logType] + "'>" + str + "</li>");
+            if (log.children("li").length > 2) {
+                log.get(0).removeChild(log.children("li")[0]);
+            }
+        }
+        function getTime() {
+            var now = new Date(),
+			h = now.getHours(),
+			m = now.getMinutes(),
+			s = now.getSeconds(),
+			ms = now.getMilliseconds();
+            return (h + ":" + m + ":" + s + " " + ms);
+        }
+
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+    </script>
+}

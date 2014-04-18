@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="2e77c6ef-ec29-487c-8aac-5b6e19d34c61" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <comments>
+    <comment Id="3a633532-7915-4552-bb6a-35b86aba1d24" name="Comment1">
+      <body>Sql Server 2008</body>
+    </comment>
+    <comment Id="2a998647-d00b-4af6-bdbe-2ece5961d821" name="Comment2">
+      <body>CarRepository</body>
+    </comment>
+    <comment Id="e0d42ae0-88f3-4361-9583-11ea563ea313" name="Comment3">
+      <body>CarCategoryRepository</body>
+    </comment>
+    <comment Id="673fa144-401d-467e-bea7-7bb293315666" name="Comment4">
+      <body>BaseRepository</body>
+    </comment>
+    <comment Id="b7e1a0d3-d06f-48c5-8a7a-10c76e728f8c" name="Comment5">
+      <body>Views</body>
+    </comment>
+    <comment Id="6673a0a8-b2e2-4494-be55-cd8fe920707c" name="Comment6">
+      <body>View Models</body>
+    </comment>
+    <comment Id="86b5e063-0325-4b54-8dda-5d4faf903fbc" name="Comment7">
+      <body>Controllers</body>
+    </comment>
+    <comment Id="d9e5e5f0-2fdd-4bfb-80af-0a8d8028a2ae" name="Comment8">
+      <body>Common</body>
+    </comment>
+    <comment Id="57ea1cd9-1b98-4518-b53d-077f6df00763" name="Comment81">
+      <body>Caching</body>
+    </comment>
+    <comment Id="b6dd187b-950f-4776-aedc-9106f73a90b7" name="Comment82">
+      <body>Logging</body>
+    </comment>
+    <comment Id="866e74de-4872-4407-90bc-c4a5c076f898" name="Comment83">
+      <body>Exception</body>
+    </comment>
+    <comment Id="2f2a6cdb-812c-42e9-a2cc-7707d2c22c17" name="Comment84">
+      <body>......</body>
+    </comment>
+    <comment Id="4911756a-4cb9-46da-97a7-23b38ff34b31" name="Comment841">
+      <body>Configuration</body>
+    </comment>
+    <comment Id="b4ad5166-f74d-4f94-8722-b0d4d920a9f6" name="Comment842">
+      <body>Dependency Injection</body>
+    </comment>
+  </comments>
+  <layers>
+    <layer Id="d390f073-ff62-49e6-9617-e7560e11ba23" name="持久化层(Persistence Layer)">
+      <comments>
+        <comment Id="befed498-064d-4295-a09d-794082f05480" name="Comment2">
+          <body>Entity Framework</body>
+        </comment>
+      </comments>
+    </layer>
+    <layer Id="ffc62a76-e140-4e4d-bf35-59ceab84a271" name="数据层(Data Access Layer)">
+      <comments>
+        <comment Id="4ee5995b-2b99-41ee-a7b6-a286d714c242" name="Comment1">
+          <body>IBaseRepository</body>
+        </comment>
+        <comment Id="f408b0d5-6ec8-41f5-a770-4a85a2bbd115" name="Comment2">
+          <body>ICarRepository</body>
+        </comment>
+        <comment Id="cc265162-1971-4902-ad88-e847948ada4c" name="Comment3">
+          <body>ICarCategoryRepository</body>
+        </comment>
+      </comments>
+    </layer>
+    <layer Id="6ef5db75-1499-4305-b11b-7f81d1ab2cde" name="显示层(Presentation Layer)" />
+    <layer Id="084663ed-9bbf-48c9-96a2-4f938e2b68a7" name="Domain Models">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="e098cf4d-bb1b-4d39-88a1-efb5dc6e1c6d" direction="Forward">
+          <layerMoniker Id="ffc62a76-e140-4e4d-bf35-59ceab84a271" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="1748545a-9165-4f0a-b000-e930926beaac" name="其它组件" />
+  </layers>
+</layerModel>

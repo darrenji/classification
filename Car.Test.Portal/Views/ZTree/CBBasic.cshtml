@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "CBBasic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<div>
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script src="~/Scripts/zTree_v3/jquery.ztree.excheck-3.5.js"></script>
+    <script type="text/javascript">
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        var zNodes = [
+			{ id: 1, pId: 0, name: "随意勾选 1", open: true },
+			{ id: 11, pId: 1, name: "随意勾选 1-1", open: true },
+			{ id: 111, pId: 11, name: "随意勾选 1-1-1" },
+			{ id: 112, pId: 11, name: "随意勾选 1-1-2" },
+			{ id: 12, pId: 1, name: "随意勾选 1-2", open: true },
+			{ id: 121, pId: 12, name: "随意勾选 1-2-1" },
+			{ id: 122, pId: 12, name: "随意勾选 1-2-2" },
+			{ id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true },
+			{ id: 21, pId: 2, name: "随意勾选 2-1" },
+			{ id: 22, pId: 2, name: "随意勾选 2-2", open: true },
+			{ id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true },
+			{ id: 222, pId: 22, name: "随意勾选 2-2-2" },
+			{ id: 23, pId: 2, name: "随意勾选 2-3" }
+        ];
+
+        function setCheck() {
+            var zTree = $.fn.zTree.getZTreeObj("#treeDemo");
+            //var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+			//py = $("#py").attr("checked") ? "p" : "",
+			//sy = $("#sy").attr("checked") ? "s" : "",
+			//pn = $("#pn").attr("checked") ? "p" : "",
+			//sn = $("#sn").attr("checked") ? "s" : "",
+            //type = { "Y": py + sy, "N": pn + sn };
+            zTree.setting.check.chkboxType = { "Y": "ps", "N": "ps" };
+        }
+
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            setCheck();
+        });
+    </script>
+}

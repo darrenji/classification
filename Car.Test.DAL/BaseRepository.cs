@@ -65,9 +65,9 @@ namespace Car.Test.DAL
             Cache.InValidate(typeof(T).ToString());
         }
 
-        public void SaveChanges()
+        public int SaveChanges()
         {
-            DataContext.SaveChanges();
+            return DataContext.SaveChanges();
         }
     }
 }

@@ -1,0 +1,239 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>编辑类别</title>
+    <link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+    <link href="~/Content/themes/gray/easyui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    @*<script src="~/Scripts/jquery-1.7.1.js"></script>*@ 
+    <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script src="~/Scripts/zTree_v3/jquery.ztree.excheck-3.5.js"></script>
+    <script src="~/Scripts/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/easyui-lang-zh_CN.js"></script>
+     <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>   
+    <style type="text/css">
+         .field-validation-error { 
+            color: red;
+        }
+
+        .fdwith {
+            display: inline-block;
+            width: 150px;
+        }
+
+         ul {
+            list-style-type: none;
+        }
+    </style>
+    <script type="text/javascript">
+        var setting = {
+            check: {
+                enable: true,
+                chkStyle: "radio",
+                radioType: "all"
+                //chkboxType: { "Y": "ps", "N": "ps" }
+            },
+            view: {
+                dblClickExpand: false,
+                showLine: true,
+                expandSpeed: "fast",
+                showIcon: false
+            },
+            data: {
+                simpleData: {
+                    enable: true,
+                    idKey: "ID",
+                    pIdKey: "ParentID",
+                    rootPid: 0
+                },
+                key: {
+                    name: "Name",
+                    pId: "ParentID",
+                    id: "ID"
+                }
+            },
+            callback: { //回调函数                              
+                //dblclick: zTreeOnDblclick
+                onClick: onClick,
+                onCheck: onCheck
+            }
+        };
+
+        var zTree;
+
+        //点击节点改变节点的选中状态
+        function onClick(e, treeId, treeNode) {
+            zTree.checkNode(treeNode, !treeNode.checked, null, true);
+            return false;
+        }
+
+        //把选中节点的name属性值显示到input上
+        function onCheck(e, treeId, treeNode) {
+            var nodes = zTree.getCheckedNodes(true),
+			v = "", vId = "";
+            for (var i = 0, l = nodes.length; i < l; i++) {
+                v += nodes[i].Name + ",";
+                vId += nodes[i].ID + ",";
+            }
+            if (v.length > 0) v = v.substring(0, v.length - 1);
+            if (vId.length > 0) vId = vId.substring(0, vId.length - 1);
+            $("#getCategory").attr("value", v);
+            $("#categoryId").attr("value", vId);
+        }
+
+        //显示树
+        function showMenu() {
+            var cObj = $("#getCategory");
+            var cOffset = $("#getCategory").offset();
+
+            $("#CategoryDiv").css({ left: cOffset.left + "px", top: cOffset.top + cObj.outerHeight() + "px" }).slideDown("fast"); //给树定位
+            $("body").bind("mousedown", onBodyDown);//绑定鼠标单击事件
+        }
+
+        //隐藏树并解除绑定
+        function hideMenu() {
+            $("#CategoryDiv").fadeOut("fast");
+            $("body").unbind("mousedown", onBodyDown);
+        }
+
+        //鼠标单击空白处事件
+        function onBodyDown(event) {
+            if (!(event.target.id == "getCategory" || event.target.id == "CategoryDiv" || $(event.target).parents("#CategoryDiv").length > 0)) {
+                hideMenu();
+                if ($('#getCategory').val().length === 0) {
+                    $('#getCategory').val("==请选择分类==");
+                }
+
+            }
+        }
+
+        //加载部分视图，根据父类ID，勾选树中的选项并显示到显式文本框getCategory中
+        function checkAndDisplay() {
+            var parentId = $('#categoryId').val(); //注意：这里的父级ID为某个节点的ID
+            var node = zTree.getNodeByTId(parentId);
+
+            //勾选
+            zTree.checkNode(node, true, false);
+            //for (var i = 0; i < nodes.length; i++) {
+            //    if (nodes[i].ID == parentId) {
+            //        zTree.checkNode(nodes[i], true, true);
+            //    }
+            //}
+
+            //显示
+            var cknodes = zTree.getCheckedNodes(true),
+            v = "";
+            for (var j = 0; j < cknodes.length; j++) {
+                v += cknodes[j].Name + ",";
+            }
+            if (v.length > 0) v = v.substring(0, v.length - 1);
+            $("#getCategory").attr("value", v);
+        }
+
+
+        $(function () {
+            //点击取消执行父窗口的方法
+            $('#cancel').on("click", function () {
+                self.parent.candelEdit();
+            });
+
+            //隐藏树
+            $("#CategoryDiv").css("display", "none");
+
+
+            //预先加载树
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("LoadAllCategories", "Home")',
+                type: "GET",
+                dataType: "text",
+                success: function (result) {
+                    $.fn.zTree.init($("#tree"), setting, eval('(' + result + ')'));
+                    zTree = $.fn.zTree.getZTreeObj("tree");
+                    zTree.expandAll(true);
+                },
+                error: function (xhr, status) {
+                    alert("加载类别失败" + status);
+                }
+            });
+
+            //加载部分视图内容
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("EditModel", "Home")',
+                data: {id: '@ViewData["id"].ToString()'},
+                contentType: 'application/html;charset=utf-8',
+                type: "GET",
+                success: function (result) {
+                    $('#content').html(result);
+                    checkAndDisplay();
+                    //限制请选择分类为只读
+                    $('#getCategory').attr('readonly', true);
+                    $.validator.unobtrusive.parse("form");
+                },
+                error: function (xhr, status) {
+                    alert("加载内容失败" + status);
+                }
+            });
+
+            //点击修改发送异步请求到控制器
+            $('#operate').on("click", "#up", function () {
+                $.ajax({
+                    cache: false,
+                    url: '@Url.Action("EditCarCategory", "Home")',
+                    type: "POST",
+                    data: $('#editForm').serialize(),
+                    success: function (data) {
+                        if (data.msg) {
+                            self.parent.refreshAfterEdit();
+                        } else {
+                            $('#content').html(data);
+                            checkAndDisplay();
+                            
+                            $('#getCategory').attr('readonly', true);//限制请选择分类为只读
+                            $.validator.unobtrusive.parse("form");
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        alert("出错了 '" + jqXhr.status + "' (状态: '" + textStatus + "', 错误为: '" + errorThrown + "')");
+                    }
+                });
+            });
+
+
+            //点击选择分类
+            $('#content').on("click", "#getCategory", function () {
+                $("#CategoryDiv").css("display", "block");
+                showMenu();
+            });
+
+        });
+    </script>
+</head>
+    <body style="height:550px;">
+       <div id="wrapper">
+            <div id="content">
+            </div>
+            <div id="operate" style="text-align: center;">
+                <input type="button" id="up" value="修改" />   <input type="button" id="cancel" value="取消/关闭窗口"/>
+            </div>
+    
+            <div id="CategoryDiv" style="position: absolute;background-color: #e3e3e3;text-align: center;">
+                <input type="button" value="展开" onclick="zTree.expandAll(true);"/>
+                <input type="button" value="折叠" onclick="zTree.expandAll(false);"/>
+                <hr/>
+        
+                <ul id="tree" class="ztree" style="margin-top:0; width:180px; height: 250px; overflow:auto;margin: 0 auto 0 auto;"></ul>
+            </div>
+        </div>
+    </body>
+</html>

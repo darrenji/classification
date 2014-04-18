@@ -1,0 +1,53 @@
+﻿
+
+@model Car.Test.Portal.Models.CarCategoryVm
+
+        
+            @using (Html.BeginForm("AddCarCategory", "Home", FormMethod.Post, new { id = "addForm" }))
+            {
+                @Html.AntiForgeryToken()
+                <ul>
+                    <li>
+                        <span class="fdwith">
+                            @Html.LabelFor(c => c.Name) 
+                        </span>
+                        @Html.EditorFor(c => c.Name)
+                        @Html.ValidationMessageFor(c => c.Name)
+                    </li>
+                    <li>
+                        <span class="fdwith">
+                            @Html.LabelFor(c => c.PreLetter)
+                        </span>
+                        @Html.EditorFor(c => c.PreLetter)
+                        @Html.ValidationMessageFor(c => c.PreLetter)
+                    </li>
+                    <li>
+                        <span class="fdwith">
+                            @Html.LabelFor(c => c.ParentID)
+                        </span>
+                        <input id="getCategory" type="text" value="==请选择分类==" />
+                        @Html.ValidationMessageFor(c => c.ParentID)
+                        <input type="hidden" id="categoryId" name="ParentID"/>
+                    </li>
+                    <li>
+                        <span class="fdwith">
+                            @Html.LabelFor(c => c.Level) 
+                        </span>
+                        @Html.EditorFor(c => c.Level)
+                        @Html.ValidationMessageFor(c => c.Level)
+                    </li>
+                    <li>
+                        <span class="fdwith">
+                            @Html.LabelFor(c => c.IsLeaf) 
+                        </span>
+                        @Html.DropDownListFor(c => c.IsLeaf,new[]
+                        {
+                            new SelectListItem(){Text = "是",Value = bool.TrueString}, 
+                            new SelectListItem(){Text = "否",Value = bool.FalseString}
+                        },"==选择是否为叶节点==",new {id="ld"})
+                        @Html.ValidationMessageFor(c => c.IsLeaf)
+                    </li>
+                </ul>
+            }
+        
+

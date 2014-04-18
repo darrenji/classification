@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Car.Test.Portal.Helpers.AutoMapper;
 
 namespace Car.Test.Portal
 {
@@ -22,6 +23,9 @@ namespace Car.Test.Portal
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //全局配置映射
+            AutoMapperConfiguration.Configure();
         }
     }
 }

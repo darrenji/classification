@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "ClickExpand";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<div>
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript">
+        var setting = {
+            view: {
+                dblClickExpand: false,
+                showLine: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
+
+        var zNodes = [
+			{ id: 1, pId: 0, name: "根 Root", open: true },
+			{ id: 11, pId: 1, name: "父节点 1-1", open: true },
+			{ id: 111, pId: 11, name: "叶子节点 1-1-1" },
+			{ id: 112, pId: 11, name: "叶子节点 1-1-2" },
+			{ id: 113, pId: 11, name: "叶子节点 1-1-3" },
+			{ id: 114, pId: 11, name: "叶子节点 1-1-4" },
+			{ id: 12, pId: 1, name: "父节点 1-2", open: true },
+			{ id: 121, pId: 12, name: "叶子节点 1-2-1" },
+			{ id: 122, pId: 12, name: "叶子节点 1-2-2" },
+			{ id: 123, pId: 12, name: "叶子节点 1-2-3" },
+			{ id: 124, pId: 12, name: "叶子节点 1-2-4" },
+			{ id: 13, pId: 1, name: "父节点 1-3", open: true },
+			{ id: 131, pId: 13, name: "叶子节点 1-3-1" },
+			{ id: 132, pId: 13, name: "叶子节点 1-3-2" },
+			{ id: 133, pId: 13, name: "叶子节点 1-3-3" },
+			{ id: 134, pId: 13, name: "叶子节点 1-3-4" }
+        ];
+
+        function onClick(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            zTree.expandNode(treeNode);
+        }
+
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+    </script>
+}
+

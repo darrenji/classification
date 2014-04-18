@@ -1,0 +1,216 @@
+﻿@{
+    ViewBag.Title = "SearchNodes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<style type="text/css">
+    .empty {
+        color: red;
+        border: 1px solid red;
+    }
+</style>
+
+<div>
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+<div>
+    @*<p>根据name搜索：<input type="text" id="key" value="" class="empty" /></p>*@
+    @*<p>根据level搜索：<input type="text" id="key" value="" class="empty" /></p>*@
+    @*   <p>根据id搜索：<input type="text" id="key" value="" class="empty" /></p>*@
+    @*<p>根据level搜索所有满足条件的节点：<input type="text" id="key" value="" class="empty" /></p>*@
+    @*<p>找到pId=1的所有节点：<input type="text" id="key" value="" class="empty" /></p>*@
+    <p>找到与name模糊匹配的节点：<input type="text" id="key" value="" class="empty" /></p>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript">
+        var key; //查找框的jquery元素
+        var setting = {
+            data: {
+                key: {
+                    title: "t"
+                },
+                simpleData: {
+                    enable: true
+                }
+            },
+            view: {
+                fontCss: getFontCss
+            }
+        };
+
+        var zNodes = [
+            { id: 1, pId: 0, name: "节点搜索演示 1", t: "id=1", open: true },
+            { id: 11, pId: 1, name: "关键字可以是名字", t: "id=11" },
+            { id: 12, pId: 1, name: "关键字可以是level", t: "id=12" },
+            { id: 13, pId: 1, name: "关键字可以是id", t: "id=13" },
+            { id: 14, pId: 1, name: "关键字可以是各种属性", t: "id=14" },
+            { id: 2, pId: 0, name: "节点搜索演示 2", t: "id=2", open: true },
+            { id: 21, pId: 2, name: "可以只搜索一个节点", t: "id=21" },
+            { id: 22, pId: 2, name: "可以搜索节点集合", t: "id=22" },
+            { id: 23, pId: 2, name: "搜我吧", t: "id=23" },
+            { id: 3, pId: 0, name: "节点搜索演示 3", t: "id=3", open: true },
+            { id: 31, pId: 3, name: "我的 id 是: 31", t: "id=31" },
+            { id: 32, pId: 31, name: "我的 id 是: 32", t: "id=32" },
+            { id: 33, pId: 32, name: "我的 id 是: 33", t: "id=33" }
+        ];
+
+        //获得焦点事件，如果存在empty的class，就把这个class移除
+        function focusKey(e) {
+            if (key.hasClass("empty")) {
+                key.removeClass("empty");
+            }
+        }
+
+        //失去焦点事件，失去焦点input没有值就增加empty的这个class
+        function blurKey(e) {
+            if (key.get(0).value === "") {
+                key.addClass("empty");
+            }
+        }        
+
+        //字体的样式，如果highlight为false再加粗显示
+        function getFontCss(treeId, treeNode) {
+            return (!!treeNode.highlight) ? { color: "#A60000", "font-weight": "bold" } : { color: "#333", "font-weight": "normal" };
+        }
+
+        var lastValue="", nodeList = [], fontCss = {};
+        //更新节点，是否加粗显示
+        function updateNodes(highlight) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            for (var i = 0, l = nodeList.length; i < l; i++) {
+                nodeList[i].highlight = highlight;
+                zTree.updateNode(nodeList[i]);
+            }
+        }
+
+        //根据name搜索
+        //function searchNode(e) {
+        //    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        //    var value = $.trim(key.get(0).value);
+
+        //    if (key.hasClass("empty")) {
+        //        value = "";
+        //    }
+        //    if (lastValue === value) return;
+        //    lastValue = value;
+        //    if (value === "") return;
+        //    updateNodes(false);
+
+        //    var node = zTree.getNodeByParam("name", value);
+        //    if (node === null) {
+        //        nodeList = [];
+        //    } else {
+        //        nodeList = [node];
+        //    }
+        //    updateNodes(true);
+        //}
+
+        //根据level搜索
+        //function searchNode(e) {
+        //    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        //    var value = $.trim(key.get(0).value);
+
+        //    if (key.hasClass("empty")) {
+        //        value = "";
+        //    }
+        //    if (lastValue === value) return;
+        //    lastValue = value;
+        //    if (value === "") return;
+        //    updateNodes(false);
+
+        //    var node = zTree.getNodeByParam("level", value);
+        //    if (node === null) {
+        //        nodeList = [];
+        //    } else {
+        //        nodeList = [node];
+        //    }
+        //    updateNodes(true);
+        //}
+
+        //根据id搜索
+        //function searchNode(e) {
+        //    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        //    var value = $.trim(key.get(0).value);
+
+        //    if (key.hasClass("empty")) {
+        //        value = "";
+        //    }
+        //    if (lastValue === value) return;
+        //    lastValue = value;
+        //    if (value === "") return;
+        //    updateNodes(false);
+
+        //    var node = zTree.getNodeByParam("id", value);
+        //    if (node === null) {
+        //        nodeList = [];
+        //    } else {
+        //        nodeList = [node];
+        //    }
+        //    updateNodes(true);
+        //}
+
+        //根据level搜索满足条件的所有节点
+        //function searchNode(e) {
+        //    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        //    var value = $.trim(key.get(0).value);
+
+        //    if (key.hasClass("empty")) {
+        //        value = "";
+        //    }
+        //    if (lastValue === value) return;
+        //    lastValue = value;
+        //    if (value === "") return;
+        //    updateNodes(false);
+
+        //    nodeList = zTree.getNodesByParam("level", value);
+        //    updateNodes(true);
+        //}
+
+        //找到pId=1的所有节点
+        //function searchNode(e) {
+        //    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+        //    var value = $.trim(key.get(0).value);
+
+        //    if (key.hasClass("empty")) {
+        //        value = "";
+        //    }
+        //    if (lastValue === value) return;
+        //    lastValue = value;
+        //    if (value === "") return;
+        //    updateNodes(false);
+
+        //    nodeList = zTree.getNodesByParam("pId", value);
+        //    updateNodes(true);
+        //}
+
+        //找到与name模糊匹配的节点
+        function searchNode(e) {
+            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+            var value = $.trim(key.get(0).value);
+
+            if (key.hasClass("empty")) {
+                value = "";
+            }
+            if (lastValue === value) return;
+            lastValue = value;
+            if (value === "") return;
+            updateNodes(false);
+
+            nodeList = zTree.getNodesByParamFuzzy("name", value);
+            updateNodes(true);
+        }
+
+        $(document).ready(function () {
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            key = $("#key");
+            key.on("focus", focusKey)
+			.on("blur", blurKey)
+			.on("propertychange", searchNode)
+			.on("input", searchNode);
+        });
+    </script>
+}

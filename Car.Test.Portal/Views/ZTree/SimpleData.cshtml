@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "SimpleData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+<ul id="treeDemo" class="ztree"></ul>
+
+@section scripts
+{
+    <script src="~/Scripts/zTree_v3/jquery.ztree.core-3.5.js"></script>
+    <script type="text/javascript">
+        var setting = {
+            view: {
+                //showLine: true,
+                //showIcon: showIconForTree
+                //showIcon: false
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+            
+        };
+
+        var zNodes = [
+            { id: 1, pId: 0, name: "父节点1", open: true, iconOpen: "../Content/zTreeStyle/img/diy/1_open.png", iconClose: "../Content/zTreeStyle/img/diy/1_close.png" },
+            { id: 11, pId: 1, name: "父节点101", icon: "../Content/zTreeStyle/img/diy/5.png",url: "http://www.baidu.com",target:"_blank"},
+            { id: 111, pId: 11, name: "父节点10101", click: "alert('我是不会跳转的...');return false;", target: "_blank" },
+            { id: 112, pId: 11, name: "父节点10102" },
+            { id: 113, pId: 11, name: "父节点10103" },
+            { id: 12, pId: 1, name: "父节点2" },
+            { id: 121, pId: 12, name: "父节点201" },
+            { id: 122, pId: 12, name: "父节点202" }
+            //{id:123, pId:122, name:"父节点20202",open:true}
+        ];
+
+        $(function() {
+            $.fn.zTree.init($('#treeDemo'), setting, zNodes);
+        });
+    </script>
+}
+

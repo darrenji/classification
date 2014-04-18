@@ -11,7 +11,7 @@ namespace Car.Test.DAL
         T AddEntity(T entity);
         T UpdateEntity(T entity);
         void ClearCache();
-        void SaveChanges();
+        int SaveChanges();
     }
 
 }

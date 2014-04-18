@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerDiagram dslVersion="1.0.0.0" Id="e8c59338-bf2f-4cc9-8a11-14699e18d1bb" absoluteBounds="0, 0, 11, 8.5" name="LayerDiagram1">
+  <layerModelMoniker Id="2e77c6ef-ec29-487c-8aac-5b6e19d34c61" />
+  <nestedChildShapes>
+    <ellipseShape Id="d0992096-1274-44b9-9af7-53775785507a" absoluteBounds="3.5, 5.375, 1.5, 0.625" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <commentShape Id="693bf998-05d1-47dc-afa1-2b4affade9c9" absoluteBounds="3.75, 5.5, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="3a633532-7915-4552-bb6a-35b86aba1d24" />
+      <relativeChildShapes />
+    </commentShape>
+    <layerShape Id="8c49bbb3-050d-45a2-9cd9-3ec48f036d22" absoluteBounds="2, 4.375, 4.625, 0.875" customColor="161, 199, 231">
+      <layerMoniker Id="d390f073-ff62-49e6-9617-e7560e11ba23" />
+      <nestedChildShapes>
+        <commentShape Id="0454829e-bdef-42d8-aa0d-b9243b994414" absoluteBounds="3.75, 4.75, 1.25, 0.375" customColor="Transparent">
+          <commentMoniker Id="befed498-064d-4295-a09d-794082f05480" />
+          <relativeChildShapes />
+        </commentShape>
+      </nestedChildShapes>
+    </layerShape>
+    <rectangleShape Id="87614808-77b3-423c-ba40-847be4138ebd" absoluteBounds="3.25, 4.625, 2, 0.5" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <layerShape Id="a5cd1ca3-8bba-4b72-a9b1-bf3a182818ce" absoluteBounds="2, 2.375, 4.625, 1.75" customColor="161, 199, 231">
+      <layerMoniker Id="ffc62a76-e140-4e4d-bf35-59ceab84a271" />
+      <nestedChildShapes>
+        <commentShape Id="a0956b7c-f9d1-42ea-a92a-c758ab79d6f9" absoluteBounds="3.75, 2.625, 1.25, 0.375" customColor="Transparent">
+          <commentMoniker Id="4ee5995b-2b99-41ee-a7b6-a286d714c242" />
+          <relativeChildShapes />
+        </commentShape>
+        <commentShape Id="f28d24e5-4da1-4fbf-91fe-d3eb4635b473" absoluteBounds="2.5, 3, 1.25, 0.375" customColor="Transparent">
+          <commentMoniker Id="f408b0d5-6ec8-41f5-a770-4a85a2bbd115" />
+          <relativeChildShapes />
+        </commentShape>
+        <commentShape Id="628bd965-c5a7-4e86-9d4a-00481e0eb47e" absoluteBounds="4.875, 3, 1.625, 0.5" customColor="Transparent">
+          <commentMoniker Id="cc265162-1971-4902-ad88-e847948ada4c" />
+          <relativeChildShapes />
+        </commentShape>
+      </nestedChildShapes>
+    </layerShape>
+    <ellipseShape Id="21f55645-9f4d-48aa-a30a-9ca433aa8dff" absoluteBounds="3.5, 2.625, 1.5, 0.25" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <ellipseShape Id="b00434c1-6791-4f3c-a7ac-d7f185313e6b" absoluteBounds="2.375, 3, 1.25, 0.25" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <ellipseShape Id="95ebe960-cd71-4dcf-a44f-790407283c88" absoluteBounds="4.625, 3, 1.75, 0.25" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <ellipseShape Id="84beae7a-9738-4566-b20e-9376f203e021" absoluteBounds="2.375, 3.75, 1.25, 0.25" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <commentShape Id="31bed20b-f3d1-4285-a991-073873957789" absoluteBounds="2.5, 3.75, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="2a998647-d00b-4af6-bdbe-2ece5961d821" />
+      <relativeChildShapes />
+    </commentShape>
+    <ellipseShape Id="480a40d4-efc9-4fa1-a472-e378a897dd77" absoluteBounds="4.625, 3.75, 1.75, 0.25" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <commentShape Id="e96441fc-be51-4388-aaf3-b15a2462885e" absoluteBounds="4.875, 3.75, 1.625, 0.375" customColor="Transparent">
+      <commentMoniker Id="e0d42ae0-88f3-4361-9583-11ea563ea313" />
+      <relativeChildShapes />
+    </commentShape>
+    <ellipseShape Id="6e62f2e9-2298-467d-b74c-97602161bf59" absoluteBounds="3.5, 3.375, 1.375, 0.25" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <commentShape Id="6e5c069f-a351-4ac2-8a65-c682e1eb0848" absoluteBounds="3.625, 3.375, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="673fa144-401d-467e-bea7-7bb293315666" />
+      <relativeChildShapes />
+    </commentShape>
+    <layerShape Id="9d700497-854e-47a4-bb32-e8c370c13d32" absoluteBounds="2, 0.5, 4.625, 1.625" customColor="161, 199, 231">
+      <layerMoniker Id="6ef5db75-1499-4305-b11b-7f81d1ab2cde" />
+    </layerShape>
+    <ellipseShape Id="4bbac79e-741b-47fa-ac51-c4bbe6c51dd2" absoluteBounds="2.875, 0.875, 0.75, 0.75" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <ellipseShape Id="406e6ce9-c895-4b6d-b253-2b823ff38eff" absoluteBounds="4.75, 0.75, 0.875, 0.875" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <ellipseShape Id="9d85982c-e9bb-412c-a2ef-6ee60c0761ba" absoluteBounds="3.875, 1.25, 0.75, 0.75" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <commentShape Id="6c910977-bc0a-4a20-af6b-166f64d580d7" absoluteBounds="3, 1.125, 0.5, 0.375" customColor="Transparent">
+      <commentMoniker Id="b7e1a0d3-d06f-48c5-8a7a-10c76e728f8c" />
+      <relativeChildShapes />
+    </commentShape>
+    <commentShape Id="1f1dc401-06aa-4ca4-a1ca-d0013e57ea6d" absoluteBounds="4.75, 1, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="6673a0a8-b2e2-4494-be55-cd8fe920707c" />
+      <relativeChildShapes />
+    </commentShape>
+    <commentShape Id="bdd92a87-8721-4bbf-9d94-aeee38042671" absoluteBounds="3.875, 1.5, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="86b5e063-0325-4b54-8dda-5d4faf903fbc" />
+      <relativeChildShapes />
+    </commentShape>
+    <layerShape Id="ccd8bf25-9325-41ac-b0da-ebd7f55b22c3" absoluteBounds="6.875, 2.375, 1, 1.75" customColor="161, 199, 231">
+      <layerMoniker Id="084663ed-9bbf-48c9-96a2-4f938e2b68a7" />
+    </layerShape>
+    <dependencyConnector edgePoints="[(6.875 : 3.25); (6.625 : 3.25)]" fixedFrom="Algorithm" fixedTo="Algorithm" customColor="113, 111, 110">
+      <dependencyFromLayerToLayerMoniker Id="e098cf4d-bb1b-4d39-88a1-efb5dc6e1c6d" />
+      <relativeChildShapes />
+      <nodes>
+        <layerShapeMoniker Id="ccd8bf25-9325-41ac-b0da-ebd7f55b22c3" />
+        <layerShapeMoniker Id="a5cd1ca3-8bba-4b72-a9b1-bf3a182818ce" />
+      </nodes>
+    </dependencyConnector>
+    <layerShape Id="50762f92-b2cf-451a-9927-fa2165d88502" absoluteBounds="0.625, 0.5, 1.125, 4.75" customColor="161, 199, 231">
+      <layerMoniker Id="1748545a-9165-4f0a-b000-e930926beaac" />
+    </layerShape>
+    <rectangleShape Id="4c780efa-a280-439a-9c01-740ade27b7c8" absoluteBounds="0.75, 0.875, 0.875, 0.375" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <commentShape Id="01ff797f-3707-4091-83fa-9cf44271be24" absoluteBounds="0.875, 0.875, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="d9e5e5f0-2fdd-4bfb-80af-0a8d8028a2ae" />
+      <relativeChildShapes />
+    </commentShape>
+    <rectangleShape Id="b0a37f3e-dfa2-428e-9dc4-6e632700c462" absoluteBounds="0.75, 1.5, 0.875, 0.375" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <rectangleShape Id="5be96a5a-31f8-4206-9ac2-9afa44de88ae" absoluteBounds="0.75, 2.125, 0.875, 0.375" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <rectangleShape Id="65169f7e-4443-4b0b-8e4d-059595dc2e8c" absoluteBounds="0.75, 2.75, 0.875, 0.375" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <rectangleShape Id="83af7b4d-4ab8-4dff-8bb5-65f00e2afedf" absoluteBounds="0.75, 3.375, 0.875, 0.375" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <rectangleShape Id="4167ed64-88d4-4e5c-9762-7194c0f2b14e" absoluteBounds="0.75, 4, 0.875, 0.375" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+    <commentShape Id="a7c03ad9-edcd-40d3-821d-a38c1953a91a" absoluteBounds="0.875, 1.5, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="57ea1cd9-1b98-4518-b53d-077f6df00763" />
+      <relativeChildShapes />
+    </commentShape>
+    <commentShape Id="fa621a59-3d49-4c7e-923a-8b087e3491f6" absoluteBounds="0.875, 2.125, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="b6dd187b-950f-4776-aedc-9106f73a90b7" />
+      <relativeChildShapes />
+    </commentShape>
+    <commentShape Id="fb719c46-587c-40b8-8277-9cd6344eb8c5" absoluteBounds="0.875, 2.75, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="866e74de-4872-4407-90bc-c4a5c076f898" />
+      <relativeChildShapes />
+    </commentShape>
+    <commentShape Id="d9951ab4-5614-4799-aa2a-30aa2efb3009" absoluteBounds="1, 4.625, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="2f2a6cdb-812c-42e9-a2cc-7707d2c22c17" />
+      <relativeChildShapes />
+    </commentShape>
+    <commentShape Id="6e81ddd9-ec2b-4a4d-b4d2-8363312d7fd7" absoluteBounds="0.75, 4, 1.25, 0.375" customColor="Transparent">
+      <commentMoniker Id="4911756a-4cb9-46da-97a7-23b38ff34b31" />
+      <relativeChildShapes />
+    </commentShape>
+    <commentShape Id="510bd743-3ff4-409b-91c1-641d9fb014ac" absoluteBounds="0.75, 3.375, 1.25, 0.5" customColor="Transparent">
+      <commentMoniker Id="b4ad5166-f74d-4f94-8722-b0d4d920a9f6" />
+      <relativeChildShapes />
+    </commentShape>
+    <rectangleShape Id="e2451474-fd1c-4317-b0d4-001072c7d004" absoluteBounds="0.75, 4.625, 0.875, 0.375" outlineColor="83, 134, 191" outlineThickness="0.03125" />
+  </nestedChildShapes>
+</layerDiagram>
